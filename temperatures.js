@@ -87,6 +87,7 @@ const getCountryTemperaturesJSON = async () => {
       const farehenheitRegex = /(?<=\()(.*?)(?=\))/g;
       const farenheitTemperatures = temperaturesText.match(farehenheitRegex);
 
+      // add countries, cities and temperatures to the data {}
       if (data[country]) {
         data[country][city] = farenheitTemperatures;
       } else {

@@ -7,7 +7,7 @@ var bracketRegex = /\[([^)]+)\]/;
 const url =
   "https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens";
 
-const getCountryVisas = async () => {
+const getCountryVisasCSV = async () => {
   console.log("start scraping");
 
   const $ = await fetchData(url);
@@ -57,4 +57,58 @@ const getCountryVisas = async () => {
   console.log("scraping done");
 };
 
-getCountryVisas();
+// getCountryVisasCSV();
+
+const getCountryVisasJSON = async () => {
+  console.log("start scraping");
+
+  const $ = await fetchData(url);
+  const tables = $(".wikitable");
+
+  // Create a data {} to write to file
+  const data = {};
+
+  // loop over each table
+  tables.each((index, element) => {
+    const tableRows = $(element).find("tbody tr");
+
+    const filteredRows = tableRows.filter((index, element) => {
+      // remove any tr that contain any th in their children
+      return element.children[1].name !== "th";
+    });
+
+    // loop over filtered rows
+    filteredRows.each((index, element) => {
+      const rowData = $(element).find("td");
+
+      const country = rowData
+        .first()
+        .text()
+        .trim();
+
+      const visaRequirement = rowData
+        .slice(1, 2)
+        .text()
+        .trim();
+
+      const allowedStay = rowData
+        .slice(2, 3)
+        .text()
+        .trim();
+
+      const plainCountry = country.replace(bracketRegex, "");
+      const plainVisaRequirement = visaRequirement.replace(bracketRegex, "");
+      const plainAllowedStay = allowedStay.replace(bracketRegex, "");
+
+      data[plainCountry] = {
+        visaRequirement: plainVisaRequirement,
+        allowedStay: plainAllowedStay
+      };
+    });
+  });
+
+  fs.writeFileSync("visas.json", JSON.stringify(data));
+  console.log("scraping done");
+};
+
+getCountryVisasJSON();
