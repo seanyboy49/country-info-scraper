@@ -57,8 +57,6 @@ const getCountryVisasCSV = async () => {
   console.log("scraping done");
 };
 
-// getCountryVisasCSV();
-
 const getCountryVisasJSON = async () => {
   console.log("start scraping");
 
@@ -107,8 +105,11 @@ const getCountryVisasJSON = async () => {
     });
   });
 
-  fs.writeFileSync("visas.json", JSON.stringify(data));
+  fs.writeFileSync("output/visas.json", JSON.stringify(data));
   console.log("scraping done");
 };
 
-getCountryVisasJSON();
+module.exports = {
+  getCountryVisasCSV,
+  getCountryVisasJSON
+};

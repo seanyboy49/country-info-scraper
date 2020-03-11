@@ -50,8 +50,6 @@ const getCountryTemperaturesCSV = async () => {
   console.log("scraping done");
 };
 
-// getCountryTemperaturesCSV();
-
 const getCountryTemperaturesJSON = async () => {
   console.log("start scraping");
 
@@ -98,8 +96,11 @@ const getCountryTemperaturesJSON = async () => {
     });
   });
 
-  fs.writeFileSync("temperatures.json", JSON.stringify(data), "utf8");
+  fs.writeFileSync("src/output/temperatures.json", JSON.stringify(data));
   console.log("scraping done");
 };
 
-getCountryTemperaturesJSON();
+module.exports = {
+  getCountryTemperaturesCSV,
+  getCountryTemperaturesJSON
+};
