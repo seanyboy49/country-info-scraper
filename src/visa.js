@@ -98,16 +98,14 @@ const getCountryVisasJSON = async () => {
       const plainVisaRequirement = visaRequirement.replace(bracketRegex, "");
       const plainAllowedStay = allowedStay.replace(bracketRegex, "");
 
-      data[plainCountry] = {
-        visaRequirement: plainVisaRequirement,
-        allowedStay: plainAllowedStay
-      };
+      data[plainCountry] = plainVisaRequirement;
     });
   });
 
-  fs.writeFileSync("output/visas.json", JSON.stringify(data));
+  fs.writeFileSync("src/output/visas.json", JSON.stringify(data));
   console.log("scraping done");
 };
+getCountryVisasJSON();
 
 module.exports = {
   getCountryVisasCSV,

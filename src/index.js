@@ -8,5 +8,5 @@ const countryTemperatures = require("./output/temperatures.json");
 //   console.log("key", key);
 // });
 
-// getCountryVisasJSON();
+getCountryVisasJSON();
 // getCountryTemperaturesJSON();
