@@ -99,8 +99,3 @@ const getCountryTemperaturesJSON = async () => {
   fs.writeFileSync("src/output/temperatures.json", JSON.stringify(data));
   console.log("scraping done");
 };
-
-module.exports = {
-  getCountryTemperaturesCSV,
-  getCountryTemperaturesJSON
-};

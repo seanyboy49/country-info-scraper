@@ -77,6 +77,7 @@ const getCountryVisasJSON = async () => {
 
     // loop over filtered rows
     filteredRows.each((index, element) => {
+      console.log("element", $(element).text());
       const rowData = $(element).find("td");
 
       const country = rowData
@@ -89,14 +90,12 @@ const getCountryVisasJSON = async () => {
         .text()
         .trim();
 
-      const allowedStay = rowData
-        .slice(2, 3)
-        .text()
-        .trim();
+      // console.log("rowData", rowData.text());
+      // console.log("country", country);
+      // console.log("visaRequirement", visaRequirement);
 
       const plainCountry = country.replace(bracketRegex, "");
       const plainVisaRequirement = visaRequirement.replace(bracketRegex, "");
-      const plainAllowedStay = allowedStay.replace(bracketRegex, "");
 
       data[plainCountry] = plainVisaRequirement;
     });
@@ -106,8 +105,3 @@ const getCountryVisasJSON = async () => {
   console.log("scraping done");
 };
 getCountryVisasJSON();
-
-module.exports = {
-  getCountryVisasCSV,
-  getCountryVisasJSON
-};
