@@ -26,10 +26,19 @@ const getCountryVaccinations = async () => {
       try {
         const $ = await fetchData(urlWithCountry);
 
-        const diseases = $("td[class=traveler-disease]")
-          .text()
-          .trim();
-        data[country] = diseases;
+        const diseases = $("td[class=traveler-disease]");
+
+        // Construct a string by iterating through each disease and trimming white space \n
+        const diseaseString = diseases
+          .map((index, disease) => {
+            return (trimmedDiseaseText = $(disease)
+              .text()
+              .trim());
+          })
+          .get()
+          .join(", ");
+
+        data[country] = diseaseString;
         console.log("success", country);
       } catch (error) {
         data[country] = "N/A";
@@ -38,7 +47,7 @@ const getCountryVaccinations = async () => {
     })
   );
 
-  fs.writeFileSync("output/vaccinations.json", JSON.stringify(data));
+  fs.writeFileSync("src/output/vaccinations.json", JSON.stringify(data));
   console.log("scraping done");
 };
 
